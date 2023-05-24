@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + Preact + TS</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      window.customCards = []
+    </script>
+    <script type="module" src="/dist/main.js?aaa=111"></script>
+    <div id="container"
+      style="
+        height: 100px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(56, 43, 43);
+      "
+    >
+    </div>
+
+    <script>
+      let elem = document.createElement('test-card');
+      document.getElementById("container").appendChild(elem);
+
+      let p = document.createElement('p');
+      let url = `${location.protocol}//${location.hostname}:${location.port}/dist/main.js`;
+      let urlView = `${location.protocol}//YOUR-IP:${location.port}/dist/main.js`;
+      p.innerHTML = `Add <a style="color: blue;" href="${url}">${urlView}</a> as a JavaScript Module in Home Assistant and create a "custom:test-card" in any frontend dashboard.`;
+      p.style = "color: white;`";
+      document.querySelector('#container').appendChild(p);
+    </script>
+  </body>
+</html>
