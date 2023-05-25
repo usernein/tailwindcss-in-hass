@@ -1,6 +1,6 @@
 export function CardContent () {
   return (
-    <div className='flex flex-col justify-center items-center rounded-lg'>
+    <div className='flex flex-col justify-center items-center rounded-lg text-black'>
       <div className='bg-blue-400 rounded-lg'>
         <div className='font-semibold rounded-lg'>Testeee 444</div>
         <p>Description</p>

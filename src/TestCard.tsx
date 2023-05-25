@@ -1,12 +1,29 @@
 import { HomeAssistant } from 'custom-card-helpers'
 import { render } from 'preact'
 import { HaCard } from './components/HaCard'
+import config from '../twind.config'
+import { twind, cssom, observe } from '@twind/core'
+// support shadowroot.adoptedStyleSheets in all browsers
+import 'construct-style-sheets-polyfill'
 
 export class TestCard extends HTMLElement {
   _hass: HomeAssistant | undefined
   _config: any
+  shadow: ShadowRoot
 
-  connectedCallback() {
+  constructor () {
+    super()
+
+    this.shadow = this.attachShadow({ mode: 'open' })
+
+    const sheet = cssom(new CSSStyleSheet())
+
+    const tw = twind(config, sheet)
+    this.shadow.adoptedStyleSheets = [sheet.target]
+    observe(tw, this.shadow)
+  }
+
+  connectedCallback () {
     this._render()
   }
 
@@ -14,12 +31,15 @@ export class TestCard extends HTMLElement {
     if (!this._hass || !this._config) {
       // return
     }
-    render(<HaCard hass={this._hass} config={this._config} card={this} />, this)
+    render(
+      <HaCard hass={this._hass} config={this._config} card={this} />,
+      this.shadow
+    )
   }
 
   _deRender () {
-    this.innerHTML = ''
-    render('', this)
+    this.shadow.innerHTML = ''
+    render('', this.shadow)
   }
 
   set hass (hass: HomeAssistant) {
